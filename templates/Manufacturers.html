@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Manufacturers</h1>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    * {
+  box-sizing: border-box;
+    }
+    #myInput {
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+</style>
+
+
+     <script>
+     function myFunction() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("manu");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+     </script>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+    <table border="1", id='manu'>
+      <thead>
+        <tr>
+          <th>Manufacturers</th>
+          <th>Country</th>
+          <th>Year Founded</th>
+          <th>Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for manufacturer in manus %}
+          <tr>
+            <td>
+              {{ manufacturer.name }}<br>
+            </td>
+            <td>
+                {{ manufacturer.country }} <br>
+            </td>
+            <td>
+                {{ manufacturer.year_founded }} <br>
+            </td>
+            <td>
+                {{ manufacturer.revenue }} <br>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="{% url 'home' %}">Home</a>
+  </body>
+</html>
