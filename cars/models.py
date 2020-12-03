@@ -6,6 +6,7 @@ class Manufacturers(models.Model):
     country = models.CharField(max_length=12)
     year_founded = models.IntegerField()
     revenue = models.FloatField()
+
 class Vehicle(models.Model):
     manufacturer = models.ForeignKey(Manufacturers, on_delete=models.CASCADE)
     model_name = models.CharField(max_length=40)
