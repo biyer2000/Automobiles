@@ -1,3 +1,16 @@
-<html>
-    
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Add Manufacturer</title>
+    </head>
+
+    <body>
+        <h1>Add a Manufacturer</h1>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Manufacturers"/>
+        </form>
+    </body>
 </html>

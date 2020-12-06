@@ -25,7 +25,10 @@ def add_Manu(request):
 
 
 def home(request):
-    return render(request, "home.html", {})
+    context ={} 
+    context['form']= add_Manu() 
+    return render(request, "home.html", context) 
+    #return render(request, "home.html", {})
 
 
 
