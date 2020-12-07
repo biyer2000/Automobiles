@@ -1,11 +1,15 @@
 from django.db import models
 
 # Create your models here.
+
+
 class Manufacturers(models.Model):
     name = models.CharField(max_length=40)
     country = models.CharField(max_length=12)
     year_founded = models.IntegerField()
     revenue = models.FloatField()
+
+
 
 class Vehicle(models.Model):
     manufacturer = models.ForeignKey(Manufacturers, on_delete=models.CASCADE)
@@ -15,6 +19,7 @@ class Vehicle(models.Model):
     car_availabilty = models.IntegerField()
     seating_capacity = models.IntegerField()
     vehicle_type = models.CharField(max_length = 10)
+
 
 class Person(models.Model):
     name = models.CharField(max_length = 50)
