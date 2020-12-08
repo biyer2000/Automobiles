@@ -119,7 +119,7 @@ def aucper(request):
             return render(request, "AucPerson.html", {'aucper': aucpeople})
         if query and not query2:
             aucpeople = Auction_Person.objects.filter(
-                Q(auct__icontains=query) | Q(pers__icontains=query))
+                Q(auct_id__icontains=query) | Q(pers_id_icontains=query) | Q(id__icontains=query))
             return render(request, "AucPerson.html", {'aucper': aucpeople})
         if query2 and not query:
             Auction_Person.objects.filter(Q(id__icontains=query2)).delete()
@@ -236,7 +236,7 @@ def add_auc_per(request):
         cursor = connection.cursor()
         auct = request.POST['auct']
         pers = request.POST['pers']
-        cursor.execute("""INSERT INTO cars_auction_person (auct, pers)
+        cursor.execute("""INSERT INTO cars_auction_person (Auct, Pers)
                         VALUES (%s,%s)""",
                        (auct, pers))
         return render(request, "AucPerson.html")

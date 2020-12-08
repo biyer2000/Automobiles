@@ -29,10 +29,10 @@ table, th, td {
 <th>Auction</th>
 <th>Person</th>
 <tr>
-{% for obj in aucpeople %}
+{% for obj in aucper %}
     <td>{{ obj.id }}</td>
-    <td>{{ obj.auct}}</td>
-    <td>{{ obj.pers }}</td>
+    <td>{{ obj.auct.id}}</td>
+    <td>{{ obj.pers.id }}</td>
 
 </tr>
 {% endfor %}
