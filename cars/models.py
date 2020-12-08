@@ -25,6 +25,8 @@ class Person(models.Model):
     name = models.CharField(max_length = 50)
     dob = models.DateField()
     vehicle_preference = models.CharField(max_length=20)
+
+
 class Auction(models.Model):
     capacity = models.IntegerField()
     city = models.CharField(max_length=30)
@@ -34,6 +36,8 @@ class Auction(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     no_of_cars = models.IntegerField()
+
+
 class Auction_Person(models.Model):
     auct = models.ForeignKey(Auction, on_delete=models.CASCADE)
     pers = models.ForeignKey(Person, on_delete=models.CASCADE)
