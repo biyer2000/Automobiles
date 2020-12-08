@@ -1,6 +1,5 @@
 from django import forms
-from cars.models import Manufacturers
-from cars.models import Auction
+from cars.models import Manufacturers,Auction,Cars, Vehicle, Auction_Person
 
 class ManuForm(forms.ModelForm):
     class Meta:
@@ -13,3 +12,7 @@ class AucForm(forms.ModelForm):
         fields = ('capacity', 'city', 'state', 'auc_date', 'start_time', 'end_time', 'no_of_cars')
 
 
+class VecForm(forms.ModelForm):
+    class Meta:
+        model = Vehicle
+        fields = ('manufacturer', 'model_name','no_of_doors', 'mpg', 'car_availabilty', 'seating_capacity','vehicle_type')

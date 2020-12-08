@@ -48,13 +48,13 @@ class Migration(migrations.Migration):
             name='Vehicle',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('manufacturer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cars.manufacturers')),
                 ('model_name', models.CharField(max_length=40)),
                 ('no_of_doors', models.IntegerField()),
                 ('mpg', models.FloatField()),
                 ('car_availabilty', models.IntegerField()),
                 ('seating_capacity', models.IntegerField()),
                 ('vehicle_type', models.CharField(max_length=10)),
-                ('manufacturer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cars.manufacturers')),
             ],
         ),
         migrations.CreateModel(
