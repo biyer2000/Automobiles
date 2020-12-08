@@ -207,7 +207,7 @@ def add_car(request):
             base_price = request.POST['base_price']
             owner = request.POST['owner']
             cursor.execute("""INSERT INTO cars_cars (manufacturer,vin, plate_no, no_of_accidents, year, model, color, base_price, owner)
-                            VALUES (%s,%s,%s,%s,%s,%s,%s)""",
+                            VALUES (%s,%s,%s,%s,%s,%s,%s, %s)""",
                            (manufacturer, vin, plate_no, no_of_accidents, year, model,color, base_price, owner))
             return render(request, "Car.html")
         else:
