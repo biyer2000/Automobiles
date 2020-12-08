@@ -2,12 +2,12 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 
-from cars.forms import ManuForm, AucForm, VecForm, CarForm, PerForm
+from cars.forms import ManuForm, AucForm, VecForm, CarForm, PerForm ,AucPerForm
 
 from django.db import connection
 from django.db.models import Q
 
-from .models import Manufacturers, Auction, Vehicle, Cars, Person
+from .models import Manufacturers, Auction, Vehicle, Cars, Person, Auction_Person
 
 
 def index(request):
@@ -110,6 +110,25 @@ def per(request):
             people = Person.objects.all()
             return render(request, "Person.html", {'people': people})
 
+def aucper(request):
+    if (request.method == 'GET'):
+        query = request.GET.get('q')
+        query2 = request.GET.get('d')
+        if not query and not query2:
+            aucpeople = Auction_Person.objects.all()
+            return render(request, "AucPerson.html", {'aucper': aucpeople})
+        if query and not query2:
+            aucpeople = Auction_Person.objects.filter(
+                Q(auct__icontains=query) | Q(pers__icontains=query))
+            return render(request, "AucPerson.html", {'aucper': aucpeople})
+        if query2 and not query:
+            Auction_Person.objects.filter(Q(id__icontains=query2)).delete()
+            aucpeople = Auction_Person.objects.all()
+            return render(request, "AucPerson.html", {'aucper': aucpeople})
+
+
+
+
 
 
 def add_Manu(request):
@@ -211,6 +230,20 @@ def add_per(request):
         # GET request, present an empty form
         form = PerForm()
         return render(request, 'add_person.html', {"form": form})
+
+def add_auc_per(request):
+    if request.method == 'POST':
+        cursor = connection.cursor()
+        auct = request.POST['auct']
+        pers = request.POST['pers']
+        cursor.execute("""INSERT INTO cars_auction_person (auct, pers)
+                        VALUES (%s,%s)""",
+                       (auct, pers))
+        return render(request, "AucPerson.html")
+    else:
+        # GET request, present an empty form
+        form = AucPerForm()
+        return render(request, 'add_auc_per.html', {"form": form})
 
 
 

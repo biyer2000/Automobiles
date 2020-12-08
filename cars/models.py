@@ -39,8 +39,8 @@ class Auction(models.Model):
 
 
 class Auction_Person(models.Model):
-    auct = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    pers = models.ForeignKey(Person, on_delete=models.CASCADE)
+    auct = models.ForeignKey(Auction, on_delete=models.CASCADE, default=' ')
+    pers = models.ForeignKey(Person, on_delete=models.CASCADE, default=' ')
 
 
 
