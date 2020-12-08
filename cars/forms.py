@@ -16,3 +16,9 @@ class VecForm(forms.ModelForm):
     class Meta:
         model = Vehicle
         fields = ('manufacturer', 'model_name','no_of_doors', 'mpg', 'car_availabilty', 'seating_capacity','vehicle_type')
+
+
+class CarForm(forms.ModelForm):
+    class Meta:
+        model = Cars
+        fields = ('manufacturer', 'vin', 'plate_no', 'no_of_accidents', 'year', 'model', 'color', 'base_price', 'owner')

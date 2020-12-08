@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 
-from cars.forms import ManuForm, AucForm, VecForm
+from cars.forms import ManuForm, AucForm, VecForm, CarForm
 
 from django.db import connection
 from django.db.models import Q
@@ -71,6 +71,31 @@ def vec(request):
             return render(request, "Vehicle.html", {'vecs': vehicles})
 
 
+def car(request):
+    if (request.method == 'GET'):
+        query = request.GET.get('q')
+        query2 = request.GET.get('d')
+
+        if not query and not query2:
+            cars = Cars.objects.all()
+            return render(request, "Car.html", {'cars': cars})
+        if query and not query2:
+            cars = Cars.objects.filter(Q(manufacturer__name__icontains=query)|
+                                              Q(vin__icontains=query)|
+                                              Q(plate_no__icontains=query)|
+                                              Q(no_of_accidents__icontains=query)|
+                                              Q(year__icontains=query)|
+                                              Q(model__icontains=query)|
+                                              Q(color__icontains=query)|
+                                              Q(base_price__icontains=query)|
+                                              Q(owner__icontains=query))
+            return render(request, "Car.html", {'cars': cars})
+        if query2 and not query:
+            Cars.objects.filter(Q(id__icontains=query2)).delete()
+            cars = Cars.objects.all()
+            return render(request, "Car.html", {'cars': cars})
+
+
 
 def add_Manu(request):
     if request.method == 'POST':
@@ -135,14 +160,30 @@ def add_vec(request):
         form = VecForm()
         return render(request, 'add_vehicle.html', {"form": form})
 
+def add_car(request):
+        if request.method == 'POST':
+            cursor = connection.cursor()
+            manufacturer = request.POST['manufacturer']
+            vin = request.POST['vin']
+            plate_no = request.POST['plate_no']
+            no_of_accidents = request.POST['no_of_accidents']
+            year = request.POST['year']
+            model = request.POST['model']
+            color = request.POST['color']
+            base_price = request.POST['base_price']
+            owner = request.POST['owner']
+            cursor.execute("""INSERT INTO cars_auction (manufacturer,vin, plate_no, no_of_accidents, year, model, color, base_price, owner)
+                            VALUES (%s,%s,%s,%s,%s,%s,%s)""",
+                           (manufacturer, vin, plate_no, no_of_accidents, year, model,color, base_price, owner))
+            return render(request, "Car.html")
+        else:
+            # GET request, present an empty form
+            form = CarForm()
+            return render(request, 'add_car.html', {"form": form})
 def home(request):
     context ={}
     context['form'] = add_Auc(request)
     return render(request, "home.html", context)
     #return render(request, "home.html", {})
-
-
-
-
 
 
