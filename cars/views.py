@@ -2,12 +2,12 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 
-from cars.forms import ManuForm, AucForm, VecForm, CarForm
+from cars.forms import ManuForm, AucForm, VecForm, CarForm, PerForm
 
 from django.db import connection
 from django.db.models import Q
 
-from .models import Manufacturers, Auction, Vehicle, Cars, Auction_Person
+from .models import Manufacturers, Auction, Vehicle, Cars, Person
 
 
 def index(request):
@@ -95,6 +95,21 @@ def car(request):
             cars = Cars.objects.all()
             return render(request, "Car.html", {'cars': cars})
 
+def per(request):
+    if(request.method == 'GET'):
+        query = request.GET.get('q')
+        query2 = request.GET.get('d')
+        if not query and not query2:
+            people = Person.objects.all()
+            return render(request, "Person.html", {'people': people})
+        if query and not query2:
+            people = Person.objects.filter(Q(name__icontains=query)|Q(dob__icontains=query)|Q(vehicle_preference__icontains=query))
+            return render(request, "Person.html", {'people': people})
+        if query2 and not query:
+            Person.objects.filter(Q(id__icontains=query2)).delete()
+            people = Person.objects.all()
+            return render(request, "Person.html", {'people': people})
+
 
 
 def add_Manu(request):
@@ -151,7 +166,7 @@ def add_vec(request):
         car_avail = request.POST.get('car_availability', False)
         seating_cap = request.POST["seating_capacity"]
         vec_type = request.POST["vehicle_type"]
-        cursor.execute("""INSERT INTO cars_auction (manufacturer, model_name, no_of_doors, mpg, car_availability, seating_capacity, vehicle_type)
+        cursor.execute("""INSERT INTO cars_vehicle (manufacturer, model_name, no_of_doors, mpg, car_availability, seating_capacity, vehicle_type)
                         VALUES (%s,%s,%s,%s,%s,%s,%s)""",
                        (manufacturer, model, doors, mpg, car_avail, seating_cap, vec_type))
         return render(request, "Vehicle.html")
@@ -172,7 +187,7 @@ def add_car(request):
             color = request.POST['color']
             base_price = request.POST['base_price']
             owner = request.POST['owner']
-            cursor.execute("""INSERT INTO cars_auction (manufacturer,vin, plate_no, no_of_accidents, year, model, color, base_price, owner)
+            cursor.execute("""INSERT INTO cars_cars (manufacturer,vin, plate_no, no_of_accidents, year, model, color, base_price, owner)
                             VALUES (%s,%s,%s,%s,%s,%s,%s)""",
                            (manufacturer, vin, plate_no, no_of_accidents, year, model,color, base_price, owner))
             return render(request, "Car.html")
@@ -180,6 +195,25 @@ def add_car(request):
             # GET request, present an empty form
             form = CarForm()
             return render(request, 'add_car.html', {"form": form})
+
+
+def add_per(request):
+    if request.method == 'POST':
+        cursor = connection.cursor()
+        name = request.POST['name']
+        dob = request.POST['dob']
+        pref = request.POST['vehicle_preference']
+        cursor.execute("""INSERT INTO cars_person (name,dob,vehicle_preference)
+                        VALUES (%s,%s,%s)""",
+                       (name, dob, pref))
+        return render(request, "Person.html")
+    else:
+        # GET request, present an empty form
+        form = PerForm()
+        return render(request, 'add_person.html', {"form": form})
+
+
+
 def home(request):
     context ={}
     context['form'] = add_Auc(request)

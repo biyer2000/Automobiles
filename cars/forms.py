@@ -1,5 +1,5 @@
 from django import forms
-from cars.models import Manufacturers,Auction,Cars, Vehicle, Auction_Person
+from cars.models import Manufacturers,Auction,Cars, Vehicle, Person
 
 class ManuForm(forms.ModelForm):
     class Meta:
@@ -22,3 +22,9 @@ class CarForm(forms.ModelForm):
     class Meta:
         model = Cars
         fields = ('manufacturer', 'vin', 'plate_no', 'no_of_accidents', 'year', 'model', 'color', 'base_price', 'owner')
+
+
+class PerForm(forms.ModelForm):
+    class Meta:
+        model = Person
+        fields = ('name', 'dob', 'vehicle_preference')
