@@ -5,76 +5,44 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Manufacturers</h1>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<h1>Search for Manufacturer</h1>
+<form action="{% url "manu" %}" method="get" id="search">
+  <input name="q" type="text" placeholder="Search...">
+</form>
+<h1>Delete based on ID</h1>
+<form action="{% url "manu" %}" method="get" id="delete">
+  <input name="d" type="text" placeholder="Search...">
+</form>
+
 <style>
-    * {
-  box-sizing: border-box;
-    }
-    #myInput {
-  background-position: 10px 10px;
-  background-repeat: no-repeat;
-  width: 100%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
 }
 </style>
 
+<h1> Manufacturers List </h1>
 
-     <script>
-     function myFunction() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("manu");
-  tr = table.getElementsByTagName("tr");
-
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
-}
-     </script>
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-    <table border="1", id='manu'>
-      <thead>
-        <tr>
-          <th>Manufacturers</th>
-          <th>Country</th>
-          <th>Year Founded</th>
-          <th>Revenue</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for manufacturer in manus %}
-          <tr>
-            <td>
-              {{ manufacturer.name }}<br>
-            </td>
-            <td>
-                {{ manufacturer.country }} <br>
-            </td>
-            <td>
-                {{ manufacturer.year_founded }} <br>
-            </td>
-            <td>
-                {{ manufacturer.revenue }} <br>
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+<table title="table">
+<th>Id</th>
+<th>Name</th>
+<th>Country</th>
+<th>Year Founded</th>
+<th>Revenue</th>
+<tr>
+{% for obj in manus %}
+    <td>{{ obj.id }}</td>
+    <td>{{ obj.name }}</td>
+    <td>{{ obj.country }}</td>
+    <td>{{ obj.year_founded }}</td>
+    <td>{{ obj.revenue}}</td>
+</tr>
+{% endfor %}
+</table>
     <a href="{% url 'home' %}">Home</a>
+    <form>
+    <a href="javascript:history.back()">Go Back</a>
+    </form>
+    <a href= "{% url 'add_Manu' %}"> Add a Manufacturer </a>
   </body>
 </html>

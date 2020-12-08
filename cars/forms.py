@@ -5,3 +5,5 @@ class ManuForm(forms.ModelForm):
     class Meta:
         model = Manufacturers
         fields = ('name', 'country', 'year_founded', 'revenue',)
+
+

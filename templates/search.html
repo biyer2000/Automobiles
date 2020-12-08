@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Search Results</h1>
+<table title="table">
+<th>Name</th>
+<th>Country</th>
+<th>Year Founded</th>
+<th>Revenue</th>
+<tr>
+{% for obj in manus %}
+    <td>{{ obj.name }}</td>
+    <td>{{ obj.country }}</td>
+    <td>{{ obj.year_founded }}</td>
+    <td>{{ obj.revenue}}</td>
+</tr>
+{% endfor %}
+</table>
+    <a href="{% url 'home' %}">Home</a>
+
+</ul>
+</body>
+</html>
