@@ -19,6 +19,10 @@ class Vehicle(models.Model):
     car_availability = models.IntegerField()
     seating_capacity = models.IntegerField()
     vehicle_type = models.CharField(max_length = 10)
+    class Meta:
+        indexes = [
+            models.Index(fields=['model_name'], name='mod_name',),
+        ]
 
 
 class Person(models.Model):
@@ -36,6 +40,10 @@ class Auction(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     no_of_cars = models.IntegerField()
+    class Meta:
+        indexes = [
+            models.Index(fields=['auc_date', 'start_time'], name='date_time',),
+        ]
 
 
 class Auction_Person(models.Model):
