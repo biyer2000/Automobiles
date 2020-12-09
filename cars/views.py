@@ -140,7 +140,8 @@ def add_Manu(request):
         revenue = request.POST["revenue"]
         cursor.execute("""INSERT INTO cars_manufacturers (name, country, year_founded,revenue) VALUES (%s,%s,%s,%s)""",
                        (name, country, year, revenue))
-        return render(request, "home.html")
+        manufacturers = Manufacturers.objects.all()
+        return render(request, "Manufacturers.html", {'manus': manufacturers})
     else:
         # GET request, present an empty form
         form = ManuForm()
@@ -168,7 +169,8 @@ def add_Auc(request):
         cursor.execute("""INSERT INTO cars_auction (capacity, city, state, auc_date, start_time, end_time, no_of_cars)
                         VALUES (%s,%s,%s,%s,%s,%s,%s)""",
                        (capacity, city, state, auc_date, start_time, end_time, no_of_cars))
-        return render(request, "Auction.html")
+        auction = Auction.objects.all()
+        return render(request, "Auction.html", {'aucs':auction})
     else:
         # GET request, present an empty form
         form = AucForm()
@@ -188,7 +190,8 @@ def add_vec(request):
         cursor.execute("""INSERT INTO cars_vehicle (model_name, no_of_doors, mpg, car_availability, seating_capacity, vehicle_type, manufacturer_id)
                         VALUES (%s,%s,%s,%s,%s,%s,%s)""",
                        (model, doors, mpg, car_avail, seating_cap, vec_type, manufacturer))
-        return render(request, "Vehicle.html")
+        vehicles = Vehicle.objects.all()
+        return render(request, "Vehicle.html", {'vecs': vehicles})
     else:
         # GET request, present an empty form
         form = VecForm()
@@ -209,7 +212,8 @@ def add_car(request):
             cursor.execute("""INSERT INTO cars_cars (manufacturer_id,vin, plate_no, no_of_accidents, year, model, color, base_price, owner)
                             VALUES (%s,%s,%s,%s,%s,%s,%s, %s)""",
                            (manufacturer, vin, plate_no, no_of_accidents, year, model,color, base_price, owner))
-            return render(request, "Car.html")
+            cars = Cars.objects.all()
+            return render(request, "Car.html", {'cars': cars})
         else:
             # GET request, present an empty form
             form = CarForm()
@@ -225,7 +229,8 @@ def add_per(request):
         cursor.execute("""INSERT INTO cars_person (name,dob,vehicle_preference)
                         VALUES (%s,%s,%s)""",
                        (name, dob, pref))
-        return render(request, "Person.html")
+        people = Person.objects.all()
+        return render(request, "Person.html", {'people': people})
     else:
         # GET request, present an empty form
         form = PerForm()
@@ -239,7 +244,8 @@ def add_auc_per(request):
         cursor.execute("""INSERT INTO cars_auction_person (auct_id, pers_id)
                         VALUES (%s,%s)""",
                        (auct, pers))
-        return render(request, "AucPerson.html")
+        aucpeople = Auction_Person.objects.all()
+        return render(request, "AucPerson.html", {'aucper': aucpeople})
     else:
         # GET request, present an empty form
         form = AucPerForm()
