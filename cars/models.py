@@ -20,6 +20,11 @@ class Vehicle(models.Model):
     seating_capacity = models.IntegerField()
     vehicle_type = models.CharField(max_length = 10)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['model_name'], name='mod_name', ),
+        ]
+
 
 class Person(models.Model):
     name = models.CharField(max_length = 50)
@@ -36,6 +41,11 @@ class Auction(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     no_of_cars = models.IntegerField()
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['auc_date', 'start_time'], name='date_time', ),
+        ]
 
 
 class Auction_Person(models.Model):
@@ -58,5 +68,9 @@ class Cars(models.Model):
     color = models.CharField(max_length = 8)
     base_price = models.FloatField()
     owner = models.ForeignKey(Person, on_delete=models.CASCADE)
+    class Meta:
+        indexes = [
+            models.Index(fields=['manufacturer_id', 'model'],name='Car_Model'),
+        ]
 
 

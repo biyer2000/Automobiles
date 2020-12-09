@@ -32,7 +32,7 @@ def manu(request):
 
 def auc(request):
     if (request.method == 'GET'):
-        stored_procedure()
+        auc_delete_stored_procedure()
         query = request.GET.get('q')
         query2 = request.GET.get('d')
         if not query and not query2:
@@ -61,7 +61,7 @@ def vec(request):
                                               Q(model_name__icontains=query)|
                                               Q(no_of_doors__icontains=query)|
                                               Q(mpg__icontains=query)|
-                                              Q(car_availabilty__icontains=query)|
+                                              Q(car_availability__icontains=query)|
                                               Q(seating_capacity__icontains=query)|
                                               Q(vehicle_type__icontains=query))
             return render(request, "Vehicle.html", {'vecs': vehicles})
@@ -148,7 +148,7 @@ def add_Manu(request):
     return render(request, 'add_manufacturers.html', {"form": form})
 
 
-def stored_procedure():
+def auc_delete_stored_procedure():
     count = Auction.objects.all().count()
     if count > 10:
         # Auction.objects.order_by('auc_date')[0].delete()
@@ -157,7 +157,7 @@ def stored_procedure():
 
 def add_Auc(request):
     if request.method == 'POST':
-        stored_procedure()
+        auc_delete_stored_procedure()
         cursor = connection.cursor()
         capacity = request.POST["capacity"]
         city = request.POST["city"]
