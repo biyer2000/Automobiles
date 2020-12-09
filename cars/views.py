@@ -185,9 +185,9 @@ def add_vec(request):
         car_avail = request.POST.get('car_availability', False)
         seating_cap = request.POST["seating_capacity"]
         vec_type = request.POST["vehicle_type"]
-        cursor.execute("""INSERT INTO cars_vehicle (manufacturer, model_name, no_of_doors, mpg, car_availability, seating_capacity, vehicle_type)
+        cursor.execute("""INSERT INTO cars_vehicle (model_name, no_of_doors, mpg, car_availability, seating_capacity, vehicle_type, manufacturer_id)
                         VALUES (%s,%s,%s,%s,%s,%s,%s)""",
-                       (manufacturer, model, doors, mpg, car_avail, seating_cap, vec_type))
+                       (model, doors, mpg, car_avail, seating_cap, vec_type, manufacturer))
         return render(request, "Vehicle.html")
     else:
         # GET request, present an empty form
@@ -206,7 +206,7 @@ def add_car(request):
             color = request.POST['color']
             base_price = request.POST['base_price']
             owner = request.POST['owner']
-            cursor.execute("""INSERT INTO cars_cars (manufacturer,vin, plate_no, no_of_accidents, year, model, color, base_price, owner)
+            cursor.execute("""INSERT INTO cars_cars (manufacturer_id,vin, plate_no, no_of_accidents, year, model, color, base_price, owner)
                             VALUES (%s,%s,%s,%s,%s,%s,%s, %s)""",
                            (manufacturer, vin, plate_no, no_of_accidents, year, model,color, base_price, owner))
             return render(request, "Car.html")
@@ -236,7 +236,7 @@ def add_auc_per(request):
         cursor = connection.cursor()
         auct = request.POST['auct']
         pers = request.POST['pers']
-        cursor.execute("""INSERT INTO cars_auction_person ('auct', 'pers')
+        cursor.execute("""INSERT INTO cars_auction_person (auct_id, pers_id)
                         VALUES (%s,%s)""",
                        (auct, pers))
         return render(request, "AucPerson.html")

@@ -15,7 +15,7 @@ class AucForm(forms.ModelForm):
 class VecForm(forms.ModelForm):
     class Meta:
         model = Vehicle
-        fields = ('manufacturer', 'model_name','no_of_doors', 'mpg', 'car_availabilty', 'seating_capacity','vehicle_type')
+        fields = ('manufacturer', 'model_name','no_of_doors', 'mpg', 'car_availability', 'seating_capacity','vehicle_type')
 
 
 class CarForm(forms.ModelForm):

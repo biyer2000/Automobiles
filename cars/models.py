@@ -16,7 +16,7 @@ class Vehicle(models.Model):
     model_name = models.CharField(max_length=40)
     no_of_doors = models.IntegerField()
     mpg = models.FloatField()
-    car_availabilty = models.IntegerField()
+    car_availability = models.IntegerField()
     seating_capacity = models.IntegerField()
     vehicle_type = models.CharField(max_length = 10)
 
@@ -39,8 +39,8 @@ class Auction(models.Model):
 
 
 class Auction_Person(models.Model):
-    auct = models.ForeignKey(Auction, on_delete=models.CASCADE, default=' ')
-    pers = models.ForeignKey(Person, on_delete=models.CASCADE, default=' ')
+    auct = models.ForeignKey(Auction, on_delete=models.CASCADE,)
+    pers = models.ForeignKey(Person, on_delete=models.CASCADE,)
 
 
 
